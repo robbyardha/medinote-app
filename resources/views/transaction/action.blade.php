@@ -20,10 +20,12 @@
         </a>
     @endif
 
-    <a data-id="{{ $examination->id }}"
-        class="btn btn-sm color-indigo-600 text-white btn-modal btn-show-modal-pick-medicine" type="button"
-        data-form="pick-medicine">
-        <i class='bx bxs-hand'></i>
-        Sudah Ambil Obat
-    </a>
+    @if ($prescription->status == 'process')
+        <a data-id="{{ $examination->id }}"
+            class="btn btn-sm color-indigo-600 text-white btn-modal btn-show-modal-pick-medicine" type="button"
+            data-form="pick-medicine">
+            <i class='bx bxs-hand'></i>
+            Sudah Ambil Obat
+        </a>
+    @endif
 @endif

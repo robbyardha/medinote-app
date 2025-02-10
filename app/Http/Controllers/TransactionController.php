@@ -7,6 +7,7 @@ use App\Http\Requests\StoreTransactionRequest;
 use App\Http\Requests\UpdateTransactionRequest;
 use App\Models\Appointment;
 use App\Models\Examination;
+use App\Models\Prescription;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -56,7 +57,22 @@ class TransactionController extends Controller
                 $examination = Examination::where('appointment_id', $data->id)->first();
 
                 if ($examination) {
-                    return "<h6> <span class='badge color-teal-500'>Sudah Diperiksa</span></h6>";
+                    $prescription = Prescription::where('examination_id', $examination->id)->first();
+
+                    $infoStatus = '';
+                    if ($prescription->status == 'process') {
+                        $infoStatus = "<h6> <span class='badge color-teal-500'>Sudah Diperiksa</span></h6>
+                        <h6> <span class='badge color-yellow-500'>Resep Di Proses</span></h6>";
+                    } elseif ($prescription->status == 'not_taken') {
+                        $infoStatus = "<h6> <span class='badge color-teal-500'>Sudah Diperiksa</span></h6>
+                        <h6> <span class='badge color-rose-500'>Resep Tidak Diambil</span></h6>";
+                    } elseif ($prescription->status == 'taken') {
+                        $infoStatus = "<h6> <span class='badge color-teal-500'>Sudah Diperiksa</span></h6>
+                        <h6> <span class='badge color-indigo-500'>Sudah Diambil</span></h6>";
+                    } else {
+                        $infoStatus = "<h6> <span class='badge color-teal-500'>Sudah Diperiksa</span></h6>";
+                    }
+                    return $infoStatus;
                 } else {
                     return "<h6> <span class='badge color-rose-500'>Belum Diperiksa</span></h6>";
                 }
@@ -64,11 +80,13 @@ class TransactionController extends Controller
             ->addColumn('action', function ($data) {
                 $examination = Examination::where('appointment_id', $data->id)->first();
                 $transactionData = null;
+                $prescriptionData = null;
                 if ($examination) {
                     $transactionData = Transaction::where('examination_id', $examination->id)->first();
+                    $prescriptionData = Prescription::where('examination_id', $examination->id)->first();
                 }
 
-                return view('transaction.action', ['data' => $data, 'examination' => $examination, 'transaction' => $transactionData]);
+                return view('transaction.action', ['data' => $data, 'examination' => $examination, 'transaction' => $transactionData, 'prescription' => $prescriptionData]);
             })
             ->rawColumns(['action', 'status'])
             ->make(true);
@@ -134,5 +152,20 @@ class TransactionController extends Controller
         ]);
 
         return response()->json(['success' => 'Data saved successfully!'], 200);
+    }
+
+    public function pick_medicine($id)
+    {
+        $data = Prescription::where('examination_id', $id)->first();
+        if ($data) {
+            $dataUpdate = [
+                'status' => 'taken',
+                'updated_by' => auth()->user()->name
+            ];
+            $data->update($dataUpdate);
+            return response()->json(['success' => true, 'message' => 'Data updated successfully!']);
+        } else {
+            return response()->json(['success' => false, 'message' => 'Data not found!'], 404);
+        }
     }
 }

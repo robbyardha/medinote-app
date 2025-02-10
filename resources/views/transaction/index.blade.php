@@ -346,6 +346,51 @@
         });
 
 
+
+        //sudah ambil obat
+        $('body').on('click', '.btn-show-modal-pick-medicine', function() {
+            let examinationId = $(this).attr('data-id');
+
+            var table = $('#myTable').DataTable();
+
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: "Data Obat yang sudah diambil tidak dapat dikembalikan",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, sudah diambil!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "POST",
+                        url: `/invoice/payment/pick-medicine/${examinationId}`,
+                        success: function(response) {
+                            if (response.success) {
+                                Swal.fire(
+                                    'Berhasil diambil!',
+                                    'Data obat sudah diambil.',
+                                    'success'
+                                );
+                                // table.ajax.reload(null, false);
+                                location.reload();
+                            }
+                        },
+                        error: function(error) {
+                            Swal.fire(
+                                'Gagal!',
+                                'Ada masalah saat update data.',
+                                'error'
+                            );
+                        }
+                    });
+                }
+            });
+        });
+
+
         function formatRupiah(angka) {
             return new Intl.NumberFormat('id-ID', {
                 style: 'currency',
