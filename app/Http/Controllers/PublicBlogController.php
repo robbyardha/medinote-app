@@ -30,23 +30,26 @@ class PublicBlogController extends Controller
             $dataMedicine['med'] = $medicineRequest;
         }
 
-        foreach ($dataMedicine['med']['medicines'] as &$med) {
-            $response = getMedicineDetail($med['id']);
-            $validPrice = null;
-            $currentDate = Carbon::now()->toDateString();
+        if ($dataMedicine['message'] == 'OK') {
+            foreach ($dataMedicine['med']['medicines'] as &$med) {
+                $response = getMedicineDetail($med['id']);
+                $validPrice = null;
+                $currentDate = Carbon::now()->toDateString();
 
-            foreach ($response['prices'] as $price) {
-                $startDate = Carbon::parse($price['start_date']['value'])->toDateString();
-                $endDate = Carbon::parse($price['end_date']['value'])->toDateString();
+                foreach ($response['prices'] as $price) {
+                    $startDate = Carbon::parse($price['start_date']['value'])->toDateString();
+                    $endDate = Carbon::parse($price['end_date']['value'])->toDateString();
 
-                if ($currentDate >= $startDate && $currentDate <= $endDate) {
-                    $validPrice = $price['unit_price'];
-                    break;
+                    if ($currentDate >= $startDate && $currentDate <= $endDate) {
+                        $validPrice = $price['unit_price'];
+                        break;
+                    }
                 }
-            }
 
-            $med['valid_price'] = $validPrice;
+                $med['valid_price'] = $validPrice;
+            }
         }
+
 
         // dd($dataMedicine);
 

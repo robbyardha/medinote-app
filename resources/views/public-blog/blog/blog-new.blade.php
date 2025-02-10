@@ -14,7 +14,7 @@
                     @else
                         <div class="alert alert-warning" role="alert">
                             <i class="bi bi-exclamation-triangle"></i> Silahkan konfigurasi aplikasi terlebih dahulu di
-                            pengaturan.
+                            pengaturan untuk menampilkan harga obat yang berlaku.
                         </div>
                     @endif
                 </div>
