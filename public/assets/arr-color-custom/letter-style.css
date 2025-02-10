@@ -1,0 +1,83 @@
+/* Mengatur margin dan padding pada body */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    box-sizing: border-box;
+}
+
+/* Membuat surat memiliki ukuran A4 */
+.surat {
+    width: 21cm;
+    height: 29.7cm;
+    margin: 0.5 auto;
+    padding: 1cm;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header Kop Surat */
+.kop-surat {
+    text-align: center;
+    /* margin-bottom: 1cm; */
+    margin-bottom: 0.5rem;
+    margin-top: -1cm;
+}
+
+.kop-img {
+    width: 100%;
+    height: auto;
+}
+
+/* Informasi Surat (Nomor, Lampiran, Hal, Tanggal) */
+.informasi {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1cm;
+    /* margin-bottom: 1cm; */
+}
+
+.left-info p {
+    margin: 0;
+    font-size: 14px;
+}
+
+.right-info p {
+    margin: 0;
+    text-align: right;
+    font-size: 14px;
+}
+
+/* Kepada dan Penanggung Jawab */
+.kepada {
+    margin-bottom: 1cm;
+}
+
+.kepada p {
+    margin: 0;
+    font-size: 14px;
+}
+
+/* Isi Surat */
+.isi-surat {
+    margin-bottom: 3cm;
+    font-size: 14px;
+}
+
+.isi-surat p {
+    text-align: justify;
+    margin: 10px 0;
+}
+
+/* Footer Surat */
+.footer-surat {
+    text-align: center;
+    margin-top: 9cm;
+    padding-top: 1.5cm;
+    margin-bottom: -1cm;
+}
+
+.footer-img {
+    width: 100%;
+    height: auto;
+}
