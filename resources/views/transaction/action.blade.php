@@ -13,8 +13,8 @@
             Pembayaran
         </a>
     @else
-        <a href="/exam/examination/payment/{{ Crypt::encrypt($examination->id) }}"
-            data-patient_id="{{ $examination->id }}" class="btn btn-sm color-rose-500" data-form="cetak-struk">
+        <a href="/invoice/payment/print/{{ Crypt::encrypt($examination->id) }}" data-patient_id="{{ $examination->id }}"
+            class="btn btn-sm color-rose-500" data-form="cetak-struk">
             <i class='bx bxs-file-pdf'></i>
             Cetak Struk
         </a>

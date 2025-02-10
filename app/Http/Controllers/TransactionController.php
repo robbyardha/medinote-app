@@ -9,6 +9,8 @@ use App\Models\Appointment;
 use App\Models\Examination;
 use App\Models\Prescription;
 use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
@@ -167,5 +169,20 @@ class TransactionController extends Controller
         } else {
             return response()->json(['success' => false, 'message' => 'Data not found!'], 404);
         }
+    }
+
+    public function print($id)
+    {
+        $decryptExaminationId = Crypt::decrypt($id);
+        $transactionDetail = Transaction::getTransactionDetails($decryptExaminationId);
+        $examDataItem = Examination::getDetailExaminationItem($decryptExaminationId);
+
+        $data = [
+            'detail' => $transactionDetail,
+            'items' => $examDataItem,
+        ];
+
+        $pdf = Pdf::loadView('pdf.print-struk', $data);
+        return $pdf->download('print-struk-' . Carbon::now()->timestamp . '.pdf');
     }
 }

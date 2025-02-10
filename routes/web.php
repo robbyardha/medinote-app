@@ -124,6 +124,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/invoice/payment/detail/{id}', [TransactionController::class, 'detail'])->middleware(['auth', 'verified', 'role_or_permission:developer|/invoice/payment/detail']);
     Route::post('/invoice/payment/save-payment', [TransactionController::class, 'save_payment'])->middleware(['auth', 'verified', 'role_or_permission:developer|/invoice/payment/save-payment']);
     Route::post('/invoice/payment/pick-medicine/{id}', [TransactionController::class, 'pick_medicine'])->middleware(['auth', 'verified', 'role_or_permission:developer|/invoice/payment/pick-medicine']);
+    Route::get('/invoice/payment/print/{id}', [TransactionController::class, 'print'])->middleware(['auth', 'verified', 'role_or_permission:developer|/invoice/payment/print']);
 
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
