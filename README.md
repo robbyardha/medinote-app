@@ -91,14 +91,14 @@ CMS App is an open-source Content Management System built with Laravel. It provi
 
     Alur Program
 
-    1. Clone repository
+    -   Clone repository
 
     ```bash
     git clone https://github.com/robbyardha/medinote-app.git
 
     ```
 
-    2. Masuk ke repository app dan jalankan dengan terminal
+    -   Masuk ke repository app dan jalankan dengan terminal
 
     ```bash
     php artisan arr-medinote-app-install
@@ -107,13 +107,13 @@ CMS App is an open-source Content Management System built with Laravel. It provi
 
     Untuk membuat database konfigurasi dan melakukan konfigurasi awal app
 
-    2.  Login Menggunakan Developer Akun
-    3.  Masuk Ke Menu Setting -> isikan data email dan nomor telepon (untuk auth request API Obat)
-    4.  Mulai Pendaftaran Pemeriksaan di menu pemeriksaan submenu pendaftaran pemeriksaan
-    5.  Lakukan trigger button call untuk pemanggilan ke ruang dan memulai pemeriksaan
-    6.  Lakukan Pemeriksaan di submenu pemeriksaan dan pilih pasien
-    7.  Lakukan pengisian data dan memulai peresepan obat
-    8.  Lakukan pembayaran dimenu invoice submenu pembayaran (dapat mencetak struk) dan pengambilan obat
+    -   Login Menggunakan Developer Akun
+    -   Masuk Ke Menu Setting -> isikan data email dan nomor telepon (untuk auth request API Obat)
+    -   Mulai Pendaftaran Pemeriksaan di menu pemeriksaan submenu pendaftaran pemeriksaan
+    -   Lakukan trigger button call untuk pemanggilan ke ruang dan memulai pemeriksaan
+    -   Lakukan Pemeriksaan di submenu pemeriksaan dan pilih pasien
+    -   Lakukan pengisian data dan memulai peresepan obat
+    -   Lakukan pembayaran dimenu invoice submenu pembayaran (dapat mencetak struk) dan pengambilan obat
 
 ### Changes & Improvements:
 
