@@ -20,7 +20,7 @@ CMS App is an open-source Content Management System built with Laravel. It provi
 -   [x] Master Patient
 -   [x] Get Medicine
 -   [x] Payment
--   [x] API
+-   [x] API HTTP Client Guzzle
 -   [x] Use Laravel Breeze
 -   [x] User Allow Login & Register
 -   [x] Custom Admin Panel
@@ -29,6 +29,7 @@ CMS App is an open-source Content Management System built with Laravel. It provi
 -   [x] Use Library Select2
 -   [x] Use Library Datatables Yajra
 -   [x] Use Library AOS
+-   [x] Use Library DOMPDF
 
 ---
 
@@ -39,7 +40,7 @@ CMS App is an open-source Content Management System built with Laravel. It provi
     First, clone the repository to your local machine by running:
 
     ```bash
-    git clone https://github.com/robbyardha/cms-app.git
+    git clone https://github.com/robbyardha/medinote-app.git
     ```
 
 2.  **Run Installation Command**
@@ -47,7 +48,7 @@ CMS App is an open-source Content Management System built with Laravel. It provi
     Navigate to the project folder and run the installation command to set up the CMS App:
 
     ```bash
-    php artisan arr-cms-app-install
+    php artisan arr-medinote-app-install
 
     ```
 
@@ -56,7 +57,7 @@ CMS App is an open-source Content Management System built with Laravel. It provi
     In APP_URL you can change url by yourself like:
 
     ```bash
-    https://cms-app.test
+    https://medinote-app.test
 
     ```
 
@@ -72,7 +73,7 @@ CMS App is an open-source Content Management System built with Laravel. It provi
     or if you user laragon or laravel herd you can open in browser
 
     ```bash
-    https://cms-app.test/
+    https://medinote-app.test/
 
     ```
 
@@ -88,16 +89,31 @@ CMS App is an open-source Content Management System built with Laravel. It provi
 
 6.  **Note**
 
-    Give Permission another role to Write A Post
+    Alur Program
+
+    1. Clone repository
 
     ```bash
-    Goto Menu Access -> Give Permission -> Select Role -> Edit Permission -> Check Access CMS read and Access All Post
+    git clone https://github.com/robbyardha/medinote-app.git
 
     ```
 
-    Setting API KEY to menu setting
+    2. Masuk ke repository app dan jalankan dengan terminal
 
-             |
+    ```bash
+    php artisan arr-medinote-app-install
+
+    ```
+
+    Untuk membuat database konfigurasi dan melakukan konfigurasi awal app
+
+    2.  Login Menggunakan Developer Akun
+    3.  Masuk Ke Menu Setting -> isikan data email dan nomor telepon (untuk auth request API Obat)
+    4.  Mulai Pendaftaran Pemeriksaan di menu pemeriksaan submenu pendaftaran pemeriksaan
+    5.  Lakukan trigger button call untuk pemanggilan ke ruang dan memulai pemeriksaan
+    6.  Lakukan Pemeriksaan di submenu pemeriksaan dan pilih pasien
+    7.  Lakukan pengisian data dan memulai peresepan obat
+    8.  Lakukan pembayaran dimenu invoice submenu pembayaran (dapat mencetak struk) dan pengambilan obat
 
 ### Changes & Improvements:
 

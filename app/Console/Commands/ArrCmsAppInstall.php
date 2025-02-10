@@ -12,21 +12,21 @@ class ArrCmsAppInstall extends Command
      *
      * @var string
      */
-    protected $signature = 'arr-cms-app-install';
+    protected $signature = 'arr-medinote-app-install';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Install ARR CMS App: Create database.sqlite and run migrations with seeding';
+    protected $description = 'Install ARR Medinote App: Create database.sqlite and run migrations with seeding';
 
     /**
      * Execute the console command.
      */
     public function handle()
     {
-        $this->info('Starting ARR CMS App installation...');
+        $this->info('Starting ARR Medinote App installation...');
 
         $databasePath = database_path('database.sqlite');
 
@@ -40,7 +40,7 @@ class ArrCmsAppInstall extends Command
         $this->updateEnv();
 
         $this->call('migrate:fresh', ['--seed' => true]);
-        $this->info('ARR CMS App installation completed successfully!');
+        $this->info('ARR Medinote App installation completed successfully!');
     }
 
     /**
@@ -56,7 +56,7 @@ class ArrCmsAppInstall extends Command
             $envContent = File::get($envPath);
 
             $envContent = preg_replace('/^DB_CONNECTION=.*$/m', 'DB_CONNECTION=sqlite', $envContent);
-            $envContent = preg_replace('/^APP_URL=.*$/m', 'APP_URL=https://cms-app.test', $envContent);
+            $envContent = preg_replace('/^APP_URL=.*$/m', 'APP_URL=https://medinote-app.test', $envContent);
             // $envContent = preg_replace('/^DB_DATABASE=.*$/m', 'DB_DATABASE=' . database_path('database.sqlite'), $envContent);
 
             File::put($envPath, $envContent);
