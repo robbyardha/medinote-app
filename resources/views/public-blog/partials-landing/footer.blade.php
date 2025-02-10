@@ -4,10 +4,10 @@
         <div class="row gy-4">
             <div class="col-lg-4 col-md-6 footer-about">
                 <a href="#" class="logo d-flex align-items-center">
-                    <span class="sitename">CMS - APP</span>
+                    <span class="sitename">MEDINOTE - APP</span>
                 </a>
                 <div class="footer-contact pt-3">
-                    <p>CMS-APP - Jakarta Menteng</p>
+                    <p>MEDINOTE-APP - Jakarta Menteng</p>
                     <p>Indonesia</p>
                 </div>
                 <div class="social-links d-flex mt-4">
@@ -35,10 +35,10 @@
     </div>
 
     <div class="container copyright text-center mt-4">
-        <p>© <span>Copyright</span> <strong class="px-1 sitename">CMS - APP</strong> <span>All Rights
+        <p>© <span>Copyright</span> <strong class="px-1 sitename">MEDINOTE - APP</strong> <span>All Rights
                 Reserved</span></p>
         <div class="credits">
-            Designed by <a href="#">CMS - APP</a>
+            Designed by <a href="#">MEDINOTE - APP</a>
         </div>
     </div>
 

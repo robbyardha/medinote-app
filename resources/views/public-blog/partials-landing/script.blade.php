@@ -4,6 +4,9 @@
 
  <!-- Vendor JS Files -->
 
+ <!-- SweetAlert2 -->
+ <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
  <script src="{{ asset('landing-blog-assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
  <script src="{{ asset('landing-blog-assets/vendor/php-email-form/validate.js') }}"></script>
  <script src="{{ asset('landing-blog-assets/vendor/aos/aos.js') }}"></script>

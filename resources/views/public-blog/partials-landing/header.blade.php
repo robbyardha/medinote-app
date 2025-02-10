@@ -4,9 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>CMS - APP</title>
-    <meta name="description" content="CMS-APP">
-    <meta name="keywords" content="CMS-APP">
+    <title>MEDINOTE - APP</title>
+    <meta name="description" content="MEDINOTE-APP">
+    <meta name="keywords" content="MEDINOTE-APP">
     <meta name="author" content="Robby Firmansyah Ardha">
 
     <!-- Favicons -->

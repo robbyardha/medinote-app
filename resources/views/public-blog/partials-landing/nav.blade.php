@@ -3,7 +3,7 @@
         class="header-container container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
 
         <a href="#" class="logo d-flex align-items-center me-auto me-xl-0">
-            <h1 class="sitename">CMS-APP</h1>
+            <h1 class="sitename">MEDINOTE-APP</h1>
         </a>
 
         @auth
