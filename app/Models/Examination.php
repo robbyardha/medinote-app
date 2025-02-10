@@ -29,4 +29,13 @@ class Examination extends Model
             ->get();
         return $results;
     }
+    public static function getDetailExaminationItem($examinationId)
+    {
+        $results = DB::table('prescription_items')
+            ->join('prescriptions', 'prescriptions.id', '=', 'prescription_items.prescription_id')
+            ->join('examinations', 'examinations.id', '=', 'prescriptions.examination_id')
+            ->where('examinations.id', $examinationId)
+            ->get();
+        return $results;
+    }
 }

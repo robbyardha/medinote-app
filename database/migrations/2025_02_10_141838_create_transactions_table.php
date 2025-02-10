@@ -13,16 +13,18 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->bigIncrements("id");
-            $table->unsignedBigInteger('appointment_id');
-            $table->string('total_invoice', 200);
-            $table->string('total_pay', 200);
+            $table->unsignedBigInteger('examination_id');
+            $table->decimal('total_invoice', 15, 0);
+            $table->decimal('total_pay', 15, 0);
+            $table->decimal('total_change', 15, 0);
             $table->dateTime('payment_date');
+            $table->string('payment_by', 155);
             $table->string('created_by', 150)->nullable();
             $table->string('updated_by', 150)->nullable();
             $table->timestamps();
 
             $table->index('id');
-            $table->index('appointment_id');
+            $table->index('examination_id');
         });
     }
 

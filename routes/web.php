@@ -121,7 +121,8 @@ Route::middleware('auth')->group(function () {
     //Invoice
     Route::get('/invoice/payment/getDataAjax', [TransactionController::class, 'getDataAjax'])->middleware(['auth', 'verified', 'role_or_permission:developer|/invoice/payment']);
     Route::get('/invoice/payment', [TransactionController::class, 'index'])->middleware(['auth', 'verified', 'role_or_permission:developer|/invoice/payment']);
-    Route::get('/invoice/payment/detail', [TransactionController::class, 'detail'])->middleware(['auth', 'verified', 'role_or_permission:developer|/invoice/payment/detail']);
+    Route::get('/invoice/payment/detail/{id}', [TransactionController::class, 'detail'])->middleware(['auth', 'verified', 'role_or_permission:developer|/invoice/payment/detail']);
+    Route::post('/invoice/payment/save-payment', [TransactionController::class, 'save_payment'])->middleware(['auth', 'verified', 'role_or_permission:developer|/invoice/payment/save-payment']);
 
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

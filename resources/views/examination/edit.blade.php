@@ -115,27 +115,38 @@
 
                         <div id="medicineFields">
                             <div class="row">
-                                <div class="col-md-5">
+                                <div class="col-md-3">
+                                    <label for="">Pilih Obat</label>
                                     <select class="form-control" name="medicines[0][medicine_id]" id="medicine_id_0"
                                         required onchange="fetchMedicinePrice(0)">
                                         <option value="">Pilih Obat</option>
                                         @foreach ($medicine['medicines'] as $med)
-                                            <option value="{{ $med['id'] }}">{{ $med['name'] }}</option>
+                                            <option value="{{ $med['id'] }}" data-name="{{ $med['name'] }}">
+                                                {{ $med['name'] }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                                 <div class="col-md-3">
+                                    <label for="">Dosis</label>
                                     <input type="text" name="medicines[0][dose]" class="form-control"
                                         placeholder="Dosis" required>
                                 </div>
                                 <div class="col-md-2">
+                                    <label for="">Qty</label>
                                     <input type="number" name="medicines[0][qty]" class="form-control"
                                         placeholder="Qty" required>
                                 </div>
                                 <div class="col-md-2">
+                                    <label for="">Harga Satuan</label>
                                     <input type="text" name="medicines[0][price]" class="form-control"
                                         placeholder="Harga" id="price_0" readonly>
                                 </div>
+                                <div class="col-md-2">
+                                    <label for="">Nama Obat</label>
+                                    <input type="text" name="medicines[0][medicine_name]" class="form-control"
+                                        id="medicine_name_0" readonly>
+                                </div>
+
 
 
                                 <div class="col-md-2">
@@ -162,11 +173,21 @@
 
         function fetchMedicinePrice(index) {
             let medicineId = document.getElementById(`medicine_id_${index}`).value;
+
+            // let medicinessss = @json($medicine['medicines']);
+            // console.log(medicinessss);
+
             if (medicineId) {
                 getMedicinePrice(medicineId, index);
+
+                let selectedOption = document.querySelector(`#medicine_id_${index} option[value='${medicineId}']`);
+                let medicineName = selectedOption ? selectedOption.getAttribute('data-name') : '';
+                document.getElementById(`medicine_name_${index}`).value = medicineName;
+
             } else {
                 document.getElementById(`price_${index}`).value = '';
-                calculateTotalPrice(index);
+                document.getElementById(`medicine_name_${index}`).value = '';
+                // calculateTotalPrice(index);
             }
         }
 
@@ -177,10 +198,10 @@
                 success: function(response) {
                     if (response.unit_price) {
                         document.getElementById(`price_${index}`).value = response.unit_price;
-                        calculateTotalPrice(index);
+                        // calculateTotalPrice(index);
                     } else {
                         document.getElementById(`price_${index}`).value = 'Harga tidak tersedia';
-                        calculateTotalPrice(index);
+                        // calculateTotalPrice(index);
                     }
                 },
                 error: function() {
@@ -216,23 +237,32 @@
         document.getElementById('addMedicineField').addEventListener('click', function() {
             const medicineFieldHTML = `
                 <div class="row mt-2">
-                    <div class="col-md-5">
+                    <div class="col-md-3">
+                        <label for="">Pilih Obat</label>
                         <select class="form-control" name="medicines[${medicineIndex}][medicine_id]" id="medicine_id_${medicineIndex}" required onchange="fetchMedicinePrice(${medicineIndex})">
                             <option value="">Pilih Obat</option>
                             @foreach ($medicine['medicines'] as $med)
-                                <option value="{{ $med['id'] }}">{{ $med['name'] }}</option>
+                                <option value="{{ $med['id'] }}" data-name="{{ $med['name'] }}">{{ $med['name'] }}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="col-md-3">
+                        <label for="">Dosis</label>
                         <input type="text" name="medicines[${medicineIndex}][dose]" class="form-control" placeholder="Dosis" required>
                     </div>
                     <div class="col-md-2">
+                        <label for="">Qty</label>
                         <input type="number" name="medicines[${medicineIndex}][qty]" class="form-control" placeholder="Qty" id="qty_${medicineIndex}" required>
                     </div>
 
                     <div class="col-md-2">
+                        <label for="">Harga Satuan</label>
                         <input type="text" name="medicines[${medicineIndex}][price]" class="form-control" placeholder="Harga" id="price_${medicineIndex}" readonly>
+                    </div>
+                   
+                    <div class="col-md-2">
+                        <label for="">Nama Obat</label>
+                        <input type="text" name="medicines[${medicineIndex}][medicine_name]" class="form-control" placeholder="Nama Obat" id="medicine_name_${medicineIndex}" readonly>
                     </div>
                    
 

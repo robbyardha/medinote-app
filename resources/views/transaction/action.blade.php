@@ -1,18 +1,29 @@
 @if (!$examination)
-    <a href="/exam/examination/select-patient/{{ Crypt::encrypt($data->id) }}" data-appointment_id="{{ $data->id }}"
-        class="btn btn-sm btn-primary" data-form="select-patient">
-        Pilih Pasien
-    </a>
 @else
-    <a href="/exam/examination/payment/{{ Crypt::encrypt($examination->id) }}" data-patient_id="{{ $examination->id }}"
-        class="btn btn-sm color-teal-500" data-form="detail-examination">
-        Pembayaran
+    <a data-id="{{ $examination->id }}" class="btn btn-sm color-sky-500 text-white btn-modal btn-show-modal-detail"
+        type="button" data-form="detail" data-bs-target="#detail_modal">
+        <i class='bx bx-search'></i>
+        Detail
+    </a>
+
+    @if ($transaction == null)
+        <a data-id="{{ $examination->id }}" class="btn btn-sm color-teal-500 text-white btn-modal btn-show-modal-payment"
+            type="button" data-form="payment" data-bs-target="#payment_modal">
+            <i class='bx bx-money'></i>
+            Pembayaran
+        </a>
+    @else
+        <a href="/exam/examination/payment/{{ Crypt::encrypt($examination->id) }}"
+            data-patient_id="{{ $examination->id }}" class="btn btn-sm color-rose-500" data-form="cetak-struk">
+            <i class='bx bxs-file-pdf'></i>
+            Cetak Struk
+        </a>
+    @endif
+
+    <a data-id="{{ $examination->id }}"
+        class="btn btn-sm color-indigo-600 text-white btn-modal btn-show-modal-pick-medicine" type="button"
+        data-form="pick-medicine">
+        <i class='bx bxs-hand'></i>
+        Sudah Ambil Obat
     </a>
 @endif
-
-
-{{-- <a data-id="{{ $data->id }}" class="btn btn-sm btn-danger btn-modal btn-show-modal-delete" type="button"
-    data-form="delete"><i class='bx bxs-trash-alt text-white'></i></a>
-
-<a data-id="{{ $data->id }}" class="btn btn-sm color-sky-500 btn-modal btn-show-modal-call" type="button"
-    data-form="call"><i class='bx bxs-phone-call text-white'></i></a> --}}

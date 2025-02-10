@@ -205,6 +205,7 @@ class ExaminationController extends Controller
                     $prescriptionItem = new PrescriptionItem();
                     $prescriptionItem->prescription_id = $prescription->id; //id prescription
                     $prescriptionItem->medicine_id = $medicineData['medicine_id'];
+                    $prescriptionItem->medicine_name = $medicineData['medicine_name'];
                     $prescriptionItem->unit_price = $medicineData['price'];
                     $prescriptionItem->qty = $medicineData['qty'];
                     $prescriptionItem->dose = $medicineData['dose'];

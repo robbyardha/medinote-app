@@ -40,6 +40,9 @@
     </div>
     <!-- / Content -->
 
+    @include('transaction.modal_detail')
+    @include('transaction.modal_payment')
+    @include('transaction.modal_pick_medicine')
 
 
 
@@ -143,8 +146,211 @@
             });
 
 
+            //modal detail
+            $('body').on('click', '.btn-show-modal-detail', function(e) {
+                let examinationId = $(this).attr('data-id');
+                e.preventDefault();
+                $('#detail_modal').modal('show');
+
+                $.ajax({
+                    type: "GET",
+                    url: `/invoice/payment/detail/${examinationId}`,
+                    dataType: "json",
+                    success: function(response) {
+                        $('#medicine_table_body').empty();
+
+                        if (response.data_items && response.data_items.length > 0) {
+                            let totalPrice = 0;
+                            $.each(response.data_items, function(index, item) {
+                                let medicineName = item.medicine_name;
+                                let dose = item.dose;
+                                let qty = item.qty;
+                                let unitPrice = item.unit_price;
+                                let total = qty * unitPrice;
+
+                                $('#medicine_table_body').append(`
+                                    <tr>
+                                        <td>${index + 1}</td>
+                                        <td>${medicineName}</td>
+                                        <td>${dose}</td>
+                                        <td>${qty}</td>
+                                        <td>${formatRupiah(unitPrice)}</td>
+                                        <td>${formatRupiah(total)}</td>
+                                    </tr>
+                                `);
+
+                                totalPrice += total;
+                            });
+
+                            $('#medicine_table_body').append(`
+                                <tr>
+                                    <td colspan="5"><strong>Total Harga</strong></td>
+                                    <td><strong>${formatRupiah(totalPrice)}</strong></td>
+                                </tr>
+                            `);
+                        } else {
+                            $('#medicine_table_body').append(`
+                                <tr>
+                                    <td colspan="5" class="text-center">Tidak ada data obat.</td>
+                                </tr>
+                            `);
+                        }
+                    },
+                    error: function() {
+                        alert("Terjadi kesalahan saat mengambil data.");
+                    }
+                });
+            });
+
+
+
+            // Modal Payment & save payment
+            function savePayment() {
+                let formData = new FormData($('#add-form-client')[0]);
+
+                var table = $('#myTable').DataTable();
+
+                toggleButton('.btn-save-add', true, 'Loading...');
+
+                $.ajax({
+                    url: "{{ url('/invoice/payment/save-payment') }}",
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        toggleButton('.btn-save-add', false, 'Simpan');
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success!',
+                            text: response.success,
+                            confirmButtonText: 'OK'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                $('#payment_modal').modal('hide');
+                                // table.ajax.reload(null, false);
+                                location.reload();
+                                $('#add-form-client')[0].reset();
+                            }
+                        });
+                    },
+                    error: function(xhr) {
+                        toggleButton('.btn-save-add', false, 'Simpan');
+
+                        let errors = xhr.responseJSON.errors;
+
+                        $('.text-danger').empty();
+
+                        let errorMessages = '';
+                        if (errors) {
+                            for (let field in errors) {
+                                $('#' + field + '_error').text(errors[field][0]);
+
+                                errorMessages += errors[field][0] + '<br>';
+                            }
+                        }
+
+                        if (errors.total_pay) {
+                            alert('Nominal pembayaran tidak boleh kurang dari total tagihan.');
+                            // Swal.fire({
+                            //     icon: 'error',
+                            //     title: 'Pembayaran Tidak Valid',
+                            //     text: 'Nominal pembayaran tidak boleh kurang dari total tagihan.',
+                            //     confirmButtonText: 'OK'
+                            // });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Validation Error',
+                                html: errorMessages,
+                                confirmButtonText: 'OK'
+                            });
+                        }
+                    }
+                });
+            }
+
+            $('body').on('click', '.btn-show-modal-payment', function(e) {
+                let examinationId = $(this).attr('data-id');
+                $('#examination_id_payment').val(examinationId);
+                e.preventDefault();
+                $('#payment_modal').modal('show');
+                $.ajax({
+                    type: "GET",
+                    url: `/invoice/payment/detail/${examinationId}`,
+                    data: 'data',
+                    dataType: "json",
+                    success: function(response) {
+                        $('#medicine_table_payment_body').empty();
+
+                        if (response.data_items && response.data_items.length > 0) {
+                            let totalPrice = 0;
+                            $.each(response.data_items, function(index, item) {
+                                let medicineName = item.medicine_name;
+                                let dose = item.dose;
+                                let qty = item.qty;
+                                let unitPrice = item.unit_price;
+                                let total = qty * unitPrice;
+
+                                $('#medicine_table_payment_body').append(`
+                                    <tr>
+                                        <td>${index + 1}</td>
+                                        <td>${medicineName}</td>
+                                        <td>${dose}</td>
+                                        <td>${qty}</td>
+                                        <td>${formatRupiah(unitPrice)}</td>
+                                        <td>${formatRupiah(total)}</td>
+                                    </tr>
+                                `);
+
+                                totalPrice += total;
+                            });
+
+                            $('#medicine_table_payment_body').append(`
+                                <tr>
+                                    <td colspan="5"><strong>Total Harga</strong></td>
+                                    <td><strong>${formatRupiah(totalPrice)}</strong></td>
+                                </tr>
+                            `);
+                            $('#total_invoice').val(totalPrice);
+                        } else {
+                            $('#medicine_table_payment_body').append(`
+                                <tr>
+                                    <td colspan="5" class="text-center">Tidak ada data obat.</td>
+                                </tr>
+                            `);
+                        }
+                    },
+                    error: function() {
+                        alert("Terjadi kesalahan saat mengambil data.");
+                    }
+                });
+
+
+                $('#total_pay').focus();
+
+                $('#add-form-client').keypress(function(e) {
+                    if (e.which === 13) {
+                        e.preventDefault();
+                        savePayment();
+                    }
+                });
+
+                $('.btn-save-add').click(function() {
+                    savePayment();
+                });
+
+            });
 
 
         });
+
+
+        function formatRupiah(angka) {
+            return new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR'
+            }).format(angka);
+        }
     </script>
 @endsection

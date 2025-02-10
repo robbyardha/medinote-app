@@ -15,6 +15,7 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->foreignId('prescription_id')->constrained('prescriptions')->onDelete('cascade');
             $table->string('medicine_id');
+            $table->string('medicine_name');
             $table->integer('unit_price'); //harga obat
             $table->integer('qty'); //qty obat
             $table->string('dose'); // dosis

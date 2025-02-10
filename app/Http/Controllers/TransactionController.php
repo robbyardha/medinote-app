@@ -11,6 +11,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 
 class TransactionController extends Controller
@@ -62,8 +63,12 @@ class TransactionController extends Controller
             })
             ->addColumn('action', function ($data) {
                 $examination = Examination::where('appointment_id', $data->id)->first();
+                $transactionData = null;
+                if ($examination) {
+                    $transactionData = Transaction::where('examination_id', $examination->id)->first();
+                }
 
-                return view('transaction.action', ['data' => $data, 'examination' => $examination]);
+                return view('transaction.action', ['data' => $data, 'examination' => $examination, 'transaction' => $transactionData]);
             })
             ->rawColumns(['action', 'status'])
             ->make(true);
@@ -81,8 +86,53 @@ class TransactionController extends Controller
 
     public function detail($id)
     {
-        $decryptExamination = Crypt::decrypt($id);
-        $examData = Examination::getPriceDetailExamination($decryptExamination);
-        dd($examData);
+        $examDataPrice = Examination::getPriceDetailExamination($id);
+        $examDataItem = Examination::getDetailExaminationItem($id);
+        return response()->json([
+            'data_price' => $examDataPrice,
+            'data_items' => $examDataItem,
+        ]);
+    }
+
+    public function save_payment(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'total_pay' => 'required|numeric|min:0',
+            'examination_id' => 'required|exists:examinations,id',
+            'payment_date' => 'required',
+        ], [
+            'payment_date.required' => 'Tanggal pembayaran wajib diisi',
+            'total_pay.required' => 'Nominal pembayaran wajib diisi',
+            'total_pay.numeric' => 'Nominal pembayaran harus berupa angka',
+            'total_pay.min' => 'Nominal pembayaran tidak boleh kurang dari 0',
+            'examination_id.required' => 'ID pemeriksaan wajib diisi',
+            'examination_id.exists' => 'ID pemeriksaan tidak valid',
+        ]);
+
+        if ($request->total_pay < $request->total_invoice) {
+            return response()->json(['errors' => ['total_pay' => 'Nominal pembayaran tidak boleh kurang dari total tagihan.']], 422);
+        }
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $total_change = 0;
+        if ($request->total_pay > $request->total_invoice) {
+            $total_change = $request->total_pay - $request->total_invoice;
+        }
+
+        $dataSave = Transaction::create([
+            'examination_id' => $request->examination_id,
+            'total_pay' => $request->total_pay,
+            'total_invoice' => $request->total_invoice,
+            'total_change' => $total_change,
+            'payment_date' => $request->payment_date,
+            'payment_by' => auth()->user()->name,
+            'created_by' => auth()->user()->name,
+
+        ]);
+
+        return response()->json(['success' => 'Data saved successfully!'], 200);
     }
 }
