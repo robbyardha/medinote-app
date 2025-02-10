@@ -114,6 +114,8 @@ CMS App is an open-source Content Management System built with Laravel. It provi
     -   Lakukan Pemeriksaan di submenu pemeriksaan dan pilih pasien
     -   Lakukan pengisian data dan memulai peresepan obat
     -   Lakukan pembayaran dimenu invoice submenu pembayaran (dapat mencetak struk) dan pengambilan obat
+    -   Jika Ingin Menggunakan data lain dapat dikonfigurasi di menu master
+    -   Atau jika ingin menggunakan role akses dapat di menu access
 
 ### Changes & Improvements:
 
