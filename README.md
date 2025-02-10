@@ -105,7 +105,7 @@ Medinote App is a medication prescription application designed with a simple and
 
     ```
 
-    Untuk membuat database konfigurasi dan melakukan konfigurasi awal app
+    Untuk membuat database (database/database.sqlite) konfigurasi dan melakukan konfigurasi awal app
 
     -   Login Menggunakan Developer Akun
     -   Masuk Ke Menu Setting -> isikan data email dan nomor telepon (untuk auth request API Obat)
