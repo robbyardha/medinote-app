@@ -1,6 +1,6 @@
-# CMS App
+# Medinote App
 
-CMS App is an open-source Content Management System built with Laravel. It provides an easy-to-use platform to manage your content, posts, comments, and more. It's designed for developers who want a customizable and extendable CMS solution.
+Medinote App is a medication prescription application designed with a simple and user-friendly interface. This app streamlines the medication prescribing process, from examination registration, medication selection, to payment.
 
 ## Requirements
 
